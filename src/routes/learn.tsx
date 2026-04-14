@@ -100,6 +100,9 @@ function LearnPage() {
           </motion.div>
         ))}
       </div>
+
+      {/* AI Chatbot */}
+      <AIChatbot />
     </div>
   );
 }
