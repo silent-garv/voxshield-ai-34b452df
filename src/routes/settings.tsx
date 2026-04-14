@@ -14,6 +14,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { AuthSection } from "@/components/AuthSection";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -80,6 +81,19 @@ function SettingsPage() {
       <div className="mb-6 flex items-center gap-2">
         <Settings className="h-5 w-5 text-primary" />
         <h1 className="text-xl font-bold">Settings</h1>
+      </div>
+
+      {/* Account */}
+      <div className="mb-6">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Account
+        </h2>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <AuthSection />
+        </motion.div>
       </div>
 
       {/* Notification Settings */}
