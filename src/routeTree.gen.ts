@@ -16,6 +16,8 @@ import { Route as LearnRouteImport } from './routes/learn'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as AlertRouteImport } from './routes/alert'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiHistoryRouteImport } from './routes/api/history'
+import { Route as ApiDetectRouteImport } from './routes/api/detect'
 
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
@@ -52,6 +54,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiHistoryRoute = ApiHistoryRouteImport.update({
+  id: '/api/history',
+  path: '/api/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDetectRoute = ApiDetectRouteImport.update({
+  id: '/api/detect',
+  path: '/api/detect',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +73,8 @@ export interface FileRoutesByFullPath {
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
+  '/api/detect': typeof ApiDetectRoute
+  '/api/history': typeof ApiHistoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +84,8 @@ export interface FileRoutesByTo {
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
+  '/api/detect': typeof ApiDetectRoute
+  '/api/history': typeof ApiHistoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +96,8 @@ export interface FileRoutesById {
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
+  '/api/detect': typeof ApiDetectRoute
+  '/api/history': typeof ApiHistoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +109,8 @@ export interface FileRouteTypes {
     | '/monitoring'
     | '/safe'
     | '/settings'
+    | '/api/detect'
+    | '/api/history'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +120,8 @@ export interface FileRouteTypes {
     | '/monitoring'
     | '/safe'
     | '/settings'
+    | '/api/detect'
+    | '/api/history'
   id:
     | '__root__'
     | '/'
@@ -109,6 +131,8 @@ export interface FileRouteTypes {
     | '/monitoring'
     | '/safe'
     | '/settings'
+    | '/api/detect'
+    | '/api/history'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +143,8 @@ export interface RootRouteChildren {
   MonitoringRoute: typeof MonitoringRoute
   SafeRoute: typeof SafeRoute
   SettingsRoute: typeof SettingsRoute
+  ApiDetectRoute: typeof ApiDetectRoute
+  ApiHistoryRoute: typeof ApiHistoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/history': {
+      id: '/api/history'
+      path: '/api/history'
+      fullPath: '/api/history'
+      preLoaderRoute: typeof ApiHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/detect': {
+      id: '/api/detect'
+      path: '/api/detect'
+      fullPath: '/api/detect'
+      preLoaderRoute: typeof ApiDetectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +223,8 @@ const rootRouteChildren: RootRouteChildren = {
   MonitoringRoute: MonitoringRoute,
   SafeRoute: SafeRoute,
   SettingsRoute: SettingsRoute,
+  ApiDetectRoute: ApiDetectRoute,
+  ApiHistoryRoute: ApiHistoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
