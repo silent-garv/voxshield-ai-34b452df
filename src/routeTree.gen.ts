@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SafeRouteImport } from './routes/safe'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
 import { Route as LearnRouteImport } from './routes/learn'
@@ -16,6 +17,11 @@ import { Route as HistoryRouteImport } from './routes/history'
 import { Route as AlertRouteImport } from './routes/alert'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SafeRoute = SafeRouteImport.update({
   id: '/safe',
   path: '/safe',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/learn': typeof LearnRoute
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnRoute
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,12 +79,27 @@ export interface FileRoutesById {
   '/learn': typeof LearnRoute
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/alert' | '/history' | '/learn' | '/monitoring' | '/safe'
+  fullPaths:
+    | '/'
+    | '/alert'
+    | '/history'
+    | '/learn'
+    | '/monitoring'
+    | '/safe'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/alert' | '/history' | '/learn' | '/monitoring' | '/safe'
+  to:
+    | '/'
+    | '/alert'
+    | '/history'
+    | '/learn'
+    | '/monitoring'
+    | '/safe'
+    | '/settings'
   id:
     | '__root__'
     | '/'
@@ -85,6 +108,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/monitoring'
     | '/safe'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,10 +118,18 @@ export interface RootRouteChildren {
   LearnRoute: typeof LearnRoute
   MonitoringRoute: typeof MonitoringRoute
   SafeRoute: typeof SafeRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/safe': {
       id: '/safe'
       path: '/safe'
@@ -150,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnRoute: LearnRoute,
   MonitoringRoute: MonitoringRoute,
   SafeRoute: SafeRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
