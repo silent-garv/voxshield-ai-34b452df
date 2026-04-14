@@ -3,13 +3,14 @@
  * Persistent bottom navigation bar for the PWA.
  */
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, Shield, Clock, BookOpen } from "lucide-react";
+import { Home, Shield, Clock, BookOpen, Settings } from "lucide-react";
 
 const navItems = [
   { to: "/", icon: Home, label: "Home" },
   { to: "/monitoring", icon: Shield, label: "Monitor" },
   { to: "/history", icon: Clock, label: "History" },
   { to: "/learn", icon: BookOpen, label: "Learn" },
+  { to: "/settings", icon: Settings, label: "Settings" },
 ] as const;
 
 export function BottomNav() {

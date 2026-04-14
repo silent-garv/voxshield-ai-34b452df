@@ -2,6 +2,7 @@
  * Learn Screen — Cybersecurity tips and education.
  */
 import { createFileRoute } from "@tanstack/react-router";
+import { AIChatbot } from "@/components/AIChatbot";
 import { motion } from "framer-motion";
 import {
   BookOpen,
@@ -99,6 +100,9 @@ function LearnPage() {
           </motion.div>
         ))}
       </div>
+
+      {/* AI Chatbot */}
+      <AIChatbot />
     </div>
   );
 }
