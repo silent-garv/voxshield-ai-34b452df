@@ -1,9 +1,10 @@
 /**
  * API Service for VoxShield AI
- * Handles communication with the backend scam detection API.
+ * 
+ * Client-side service that calls server functions for
+ * scam detection and history retrieval.
  */
-
-const API_BASE_URL = "http://localhost:5000/api";
+import { detectScam, getDetectionHistory } from "@/services/detection.functions";
 
 /** Result returned from the scam detection endpoint */
 export interface DetectionResult {
@@ -12,6 +13,7 @@ export interface DetectionResult {
   suggestion: string;
   timestamp: string;
   transcript: string;
+  category: string;
 }
 
 /** History item from the backend */
@@ -22,37 +24,22 @@ export interface HistoryItem {
   suggestion: string;
   timestamp: string;
   transcript: string;
+  category: string;
 }
 
 /**
  * Sends a transcript to the backend for AI-powered scam analysis.
- * Returns a DetectionResult with risk score and explanation.
+ * Uses server function (runs on server, callable from client).
  */
 export async function analyzeTranscript(
   transcript: string
 ): Promise<DetectionResult> {
-  const response = await fetch(`${API_BASE_URL}/detect`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ transcript }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Detection API error: ${response.status}`);
-  }
-
-  return response.json();
+  return detectScam({ data: { transcript } });
 }
 
 /**
- * Fetches the detection history from the backend.
+ * Fetches the detection history from the database.
  */
 export async function fetchHistory(): Promise<HistoryItem[]> {
-  const response = await fetch(`${API_BASE_URL}/history`);
-
-  if (!response.ok) {
-    throw new Error(`History API error: ${response.status}`);
-  }
-
-  return response.json();
+  return getDetectionHistory();
 }
