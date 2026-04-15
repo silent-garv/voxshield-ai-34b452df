@@ -195,7 +195,7 @@ function UploadPage() {
                   {result.riskScore > 70 ? (
                     <AlertTriangle className="h-5 w-5 text-destructive" />
                   ) : (
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
                   )}
                   <span className="font-semibold">{result.category}</span>
                 </div>
