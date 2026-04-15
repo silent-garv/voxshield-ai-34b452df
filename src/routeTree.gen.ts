@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UploadRouteImport } from './routes/upload'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SafeRouteImport } from './routes/safe'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
@@ -20,6 +21,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiHistoryRouteImport } from './routes/api/history'
 import { Route as ApiDetectRouteImport } from './routes/api/detect'
 
+const UploadRoute = UploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
+  '/upload': typeof UploadRoute
   '/api/detect': typeof ApiDetectRoute
   '/api/history': typeof ApiHistoryRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
+  '/upload': typeof UploadRoute
   '/api/detect': typeof ApiDetectRoute
   '/api/history': typeof ApiHistoryRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
+  '/upload': typeof UploadRoute
   '/api/detect': typeof ApiDetectRoute
   '/api/history': typeof ApiHistoryRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/monitoring'
     | '/safe'
     | '/settings'
+    | '/upload'
     | '/api/detect'
     | '/api/history'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/monitoring'
     | '/safe'
     | '/settings'
+    | '/upload'
     | '/api/detect'
     | '/api/history'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/monitoring'
     | '/safe'
     | '/settings'
+    | '/upload'
     | '/api/detect'
     | '/api/history'
   fileRoutesById: FileRoutesById
@@ -156,12 +168,20 @@ export interface RootRouteChildren {
   MonitoringRoute: typeof MonitoringRoute
   SafeRoute: typeof SafeRoute
   SettingsRoute: typeof SettingsRoute
+  UploadRoute: typeof UploadRoute
   ApiDetectRoute: typeof ApiDetectRoute
   ApiHistoryRoute: typeof ApiHistoryRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upload': {
+      id: '/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   MonitoringRoute: MonitoringRoute,
   SafeRoute: SafeRoute,
   SettingsRoute: SettingsRoute,
+  UploadRoute: UploadRoute,
   ApiDetectRoute: ApiDetectRoute,
   ApiHistoryRoute: ApiHistoryRoute,
 }
