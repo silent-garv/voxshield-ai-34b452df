@@ -43,6 +43,12 @@ const features = [
     title: "Instant Alerts",
     description: "Get warned immediately when a scam is detected",
   },
+  {
+    icon: Shield,
+    title: "Upload & Analyze",
+    description: "Upload call recordings for AI-powered threat analysis",
+    link: "/upload",
+  },
 ];
 
 function HomePage() {
