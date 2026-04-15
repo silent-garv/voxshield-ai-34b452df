@@ -78,10 +78,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
+  if (isLoginPage) {
+    return (
+      <div className="mx-auto max-w-lg min-h-screen">
+        <Outlet />
+      </div>
+    );
+  }
+
   return (
-    <div className="mx-auto max-w-lg min-h-screen">
-      <Outlet />
-      <BottomNav />
-    </div>
+    <AuthGuard>
+      <div className="mx-auto max-w-lg min-h-screen">
+        <Outlet />
+        <BottomNav />
+      </div>
+    </AuthGuard>
   );
 }
