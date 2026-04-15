@@ -1,5 +1,6 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
+import { AuthGuard } from "@/components/AuthGuard";
 
 import appCss from "../styles.css?url";
 
