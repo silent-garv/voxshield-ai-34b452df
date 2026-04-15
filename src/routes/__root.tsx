@@ -1,5 +1,6 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
+import { AuthGuard } from "@/components/AuthGuard";
 
 import appCss from "../styles.css?url";
 
@@ -77,10 +78,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
+  if (isLoginPage) {
+    return (
+      <div className="mx-auto max-w-lg min-h-screen">
+        <Outlet />
+      </div>
+    );
+  }
+
   return (
-    <div className="mx-auto max-w-lg min-h-screen">
-      <Outlet />
-      <BottomNav />
-    </div>
+    <AuthGuard>
+      <div className="mx-auto max-w-lg min-h-screen">
+        <Outlet />
+        <BottomNav />
+      </div>
+    </AuthGuard>
   );
 }

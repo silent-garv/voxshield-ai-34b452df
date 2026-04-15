@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SafeRouteImport } from './routes/safe'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as AlertRouteImport } from './routes/alert'
@@ -32,6 +33,11 @@ const SafeRoute = SafeRouteImport.update({
 const MonitoringRoute = MonitoringRouteImport.update({
   id: '/monitoring',
   path: '/monitoring',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnRoute = LearnRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/alert': typeof AlertRoute
   '/history': typeof HistoryRoute
   '/learn': typeof LearnRoute
+  '/login': typeof LoginRoute
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/alert': typeof AlertRoute
   '/history': typeof HistoryRoute
   '/learn': typeof LearnRoute
+  '/login': typeof LoginRoute
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/alert': typeof AlertRoute
   '/history': typeof HistoryRoute
   '/learn': typeof LearnRoute
+  '/login': typeof LoginRoute
   '/monitoring': typeof MonitoringRoute
   '/safe': typeof SafeRoute
   '/settings': typeof SettingsRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/alert'
     | '/history'
     | '/learn'
+    | '/login'
     | '/monitoring'
     | '/safe'
     | '/settings'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/alert'
     | '/history'
     | '/learn'
+    | '/login'
     | '/monitoring'
     | '/safe'
     | '/settings'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/alert'
     | '/history'
     | '/learn'
+    | '/login'
     | '/monitoring'
     | '/safe'
     | '/settings'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AlertRoute: typeof AlertRoute
   HistoryRoute: typeof HistoryRoute
   LearnRoute: typeof LearnRoute
+  LoginRoute: typeof LoginRoute
   MonitoringRoute: typeof MonitoringRoute
   SafeRoute: typeof SafeRoute
   SettingsRoute: typeof SettingsRoute
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/monitoring'
       fullPath: '/monitoring'
       preLoaderRoute: typeof MonitoringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AlertRoute: AlertRoute,
   HistoryRoute: HistoryRoute,
   LearnRoute: LearnRoute,
+  LoginRoute: LoginRoute,
   MonitoringRoute: MonitoringRoute,
   SafeRoute: SafeRoute,
   SettingsRoute: SettingsRoute,
