@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
+import { PWAInstallButton } from "@/components/PWAInstallButton";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -110,6 +111,8 @@ function LoginPage() {
           <Shield className="h-5 w-5" />
           Sign in with Google
         </Button>
+
+        <PWAInstallButton />
       </motion.div>
 
       {/* Feature Cards */}
