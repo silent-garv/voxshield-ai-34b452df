@@ -9,6 +9,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -134,6 +135,8 @@ function LoginPage() {
           </motion.div>
         ))}
       </div>
+
+      <PWAInstallPrompt />
     </div>
   );
 }
