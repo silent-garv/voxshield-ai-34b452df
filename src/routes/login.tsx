@@ -135,6 +135,8 @@ function LoginPage() {
           </motion.div>
         ))}
       </div>
+
+      <PWAInstallPrompt />
     </div>
   );
 }
