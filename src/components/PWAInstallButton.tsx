@@ -1,7 +1,7 @@
 /**
  * PWAInstallButton — Inline button to install VoxShield as a PWA.
- * Detects beforeinstallprompt (Android/Chrome/Edge) or iOS to show
- * appropriate install action. Hides when already installed.
+ * Always visible (unless already installed). Uses the native install
+ * prompt when available; otherwise falls back to manual instructions.
  */
 import { useEffect, useState } from "react";
 import { Download, Smartphone } from "lucide-react";
@@ -17,7 +17,7 @@ export function PWAInstallButton() {
     useState<BeforeInstallPromptEvent | null>(null);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
-  const [showIOSHint, setShowIOSHint] = useState(false);
+  const [hint, setHint] = useState<string | null>(null);
 
   useEffect(() => {
     const standalone =
@@ -42,18 +42,23 @@ export function PWAInstallButton() {
   if (isStandalone) return null;
 
   const handleInstall = async () => {
-    if (isIOS) {
-      setShowIOSHint(true);
+    // Native prompt available (Chrome / Edge / Android)
+    if (installEvent) {
+      await installEvent.prompt();
+      const { outcome } = await installEvent.userChoice;
+      if (outcome === "accepted") setInstallEvent(null);
       return;
     }
-    if (!installEvent) return;
-    await installEvent.prompt();
-    const { outcome } = await installEvent.userChoice;
-    if (outcome === "accepted") setInstallEvent(null);
+    // iOS Safari — manual instructions
+    if (isIOS) {
+      setHint("Tap the Share icon, then Add to Home Screen.");
+      return;
+    }
+    // Fallback (desktop Safari, Firefox, in-app browser, preview iframe)
+    setHint(
+      "Open this site in Chrome, Edge, or Safari, then use the browser menu → Install / Add to Home Screen."
+    );
   };
-
-  // Hide entirely if there's no install path available
-  if (!isIOS && !installEvent) return null;
 
   return (
     <div className="mt-3 flex w-full max-w-xs flex-col items-center">
@@ -70,10 +75,9 @@ export function PWAInstallButton() {
         )}
         Install the App
       </Button>
-      {isIOS && showIOSHint && (
+      {hint && (
         <p className="mt-2 text-center text-xs text-muted-foreground">
-          Tap the <span className="font-semibold">Share</span> icon, then{" "}
-          <span className="font-semibold">Add to Home Screen</span>.
+          {hint}
         </p>
       )}
     </div>
