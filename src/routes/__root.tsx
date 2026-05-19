@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from "@tanstack/react-router";
 import { BottomNav } from "@/components/BottomNav";
 import { AuthGuard } from "@/components/AuthGuard";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 import appCss from "../styles.css?url";
 
@@ -91,7 +92,10 @@ function RootComponent() {
 
   if (isLoginPage) {
     return (
-      <div className="mx-auto max-w-lg min-h-screen">
+      <div className="mx-auto max-w-lg min-h-screen relative">
+        <div className="fixed top-4 right-4 z-50">
+          <ThemeToggle />
+        </div>
         <Outlet />
       </div>
     );
@@ -99,10 +103,14 @@ function RootComponent() {
 
   return (
     <AuthGuard>
-      <div className="mx-auto max-w-lg min-h-screen">
+      <div className="mx-auto max-w-lg min-h-screen relative">
+        <div className="fixed top-4 right-4 z-50">
+          <ThemeToggle />
+        </div>
         <Outlet />
         <BottomNav />
       </div>
     </AuthGuard>
   );
+
 }
