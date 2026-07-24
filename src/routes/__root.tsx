@@ -89,8 +89,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
+  const isConsentPage = location.pathname === "/.lovable/oauth/consent";
 
-  if (isLoginPage) {
+  if (isLoginPage || isConsentPage) {
     return (
       <div className="mx-auto max-w-lg min-h-screen relative">
         <div className="fixed top-4 right-4 z-50">

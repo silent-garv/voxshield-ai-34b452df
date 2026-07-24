@@ -13,6 +13,9 @@ import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { PWAInstallButton } from "@/components/PWAInstallButton";
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    next: typeof s.next === "string" && s.next.startsWith("/") ? s.next : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign In — VoxShield AI" },
@@ -47,16 +50,24 @@ const features = [
 function LoginPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
 
   useEffect(() => {
     if (!loading && user) {
-      navigate({ to: "/" });
+      if (next) {
+        window.location.href = next;
+      } else {
+        navigate({ to: "/" });
+      }
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, next]);
 
   const handleGoogleSignIn = async () => {
+    const redirectUri = next
+      ? `${window.location.origin}${next}`
+      : window.location.origin;
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: redirectUri,
     });
     if (result.error) {
       console.error("Sign-in error:", result.error);
